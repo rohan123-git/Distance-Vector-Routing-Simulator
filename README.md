@@ -28,3 +28,16 @@ Where:
 2. **Exchange**: Routers periodically send their distance vectors to direct neighbors.
 3. **Update**: Upon receiving a vector, a router recomputes its table. If a cheaper path is discovered, the table updates and triggers a new broadcast.
 4. **Convergence**: The exchange continues until no router updates its routing table.
+
+## Project Structure
+
+```text
+.
+├── src/
+│   ├── main.py          # Main execution script / simulation engine
+│   ├── router.py        # Router node representation and vector logic
+│   └── network.py       # Graph network topology manager
+├── data/
+│   └── topology.txt     # Input matrix/graph configuration
+├── README.md            # Project documentation
+└── requirements.txt     # Python dependencies (if applicable)
