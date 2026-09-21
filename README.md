@@ -1,43 +1,65 @@
-# Distance Vector Routing Protocol Simulation
+# 🌐 Distance Vector Routing Protocol Simulation
 
-A lightweight implementation and visual simulation of the **Distance Vector Routing Algorithm** using the **Bellman-Ford Algorithm**. This project simulates how network routers continuously update their routing tables through iterative exchanges with immediate neighbors until convergence is achieved.
+A lightweight and interactive simulation of the **Distance Vector Routing Protocol** based on the **Bellman-Ford Algorithm**.
 
----
-
-## Key Features
-
-- **Iterative Bellman-Ford Implementation**: Computes the shortest path from each node to all other nodes across the topology.
-- **Dynamic Routing Table Updates**: Displays real-time updates as routers exchange distance vectors.
-- **Count-to-Infinity & Split Horizon Handling**: Demonstrates routing loop challenges and techniques used to prevent them.
-- **Custom Topology Input**: Supports node and edge additions via adjacency matrices or direct configuration files.
+This project demonstrates how routers in a computer network discover optimal paths to different destinations by exchanging **distance vectors with their neighboring routers**. The simulation continues iteratively until the routing tables reach a stable state, known as **convergence**.
 
 ---
 
-## How It Works
+## 📌 Table of Contents
 
-Distance Vector Routing relies on the **Bellman-Ford equation**:
+- [Overview](#-overview)
+- [Objectives](#-objectives)
+- [Key Features](#-key-features)
+- [Concepts Covered](#-concepts-covered)
+- [How Distance Vector Routing Works](#-how-distance-vector-routing-works)
+- [Bellman-Ford Equation](#-bellman-ford-equation)
+- [Example Network](#-example-network)
+- [Routing Table Updates](#-routing-table-updates)
+- [Count-to-Infinity Problem](#-count-to-infinity-problem)
+- [Split Horizon](#-split-horizon)
+- [Project Structure](#-project-structure)
+- [Requirements](#-requirements)
+- [Installation](#-installation)
+- [Usage](#-usage)
+- [Input Format](#-input-format)
+- [Sample Workflow](#-sample-workflow)
+- [Algorithm](#-algorithm)
+- [Time Complexity](#-time-complexity)
+- [Applications](#-applications)
+- [Limitations](#-limitations)
+- [Future Enhancements](#-future-enhancements)
+- [Learning Outcomes](#-learning-outcomes)
+- [Contributing](#-contributing)
+- [License](#-license)
 
-$$D_x(y) = \min_v \{ c(x, v) + D_v(y) \}$$
+---
 
-Where:
-- $D_x(y)$ is the estimated cost from router $x$ to router $y$.
-- $c(x, v)$ is the direct cost between router $x$ and neighbor $v$.
-- $D_v(y)$ is neighbor $v$'s cost estimate to reach router $y$.
+# 📖 Overview
 
-1. **Initialization**: Each router initializes its routing table with direct link costs to immediate neighbors ($\infty$ for non-neighbors).
-2. **Exchange**: Routers periodically send their distance vectors to direct neighbors.
-3. **Update**: Upon receiving a vector, a router recomputes its table. If a cheaper path is discovered, the table updates and triggers a new broadcast.
-4. **Convergence**: The exchange continues until no router updates its routing table.
+**Distance Vector Routing** is a routing protocol in which every router maintains a routing table containing the best-known distance to each destination and the next hop used to reach that destination.
 
-## Project Structure
+Routers do not have complete knowledge of the entire network initially. Instead, each router communicates with its **direct neighbors** and exchanges information about the destinations it knows.
+
+Using the **Bellman-Ford algorithm**, routers repeatedly update their routing tables whenever a shorter path is discovered.
+
+The process continues until no further improvements can be made.
+
+### Basic Process
 
 ```text
-.
-├── src/
-│   ├── main.py          # Main execution script / simulation engine
-│   ├── router.py        # Router node representation and vector logic
-│   └── network.py       # Graph network topology manager
-├── data/
-│   └── topology.txt     # Input matrix/graph configuration
-├── README.md            # Project documentation
-└── requirements.txt     # Python dependencies (if applicable)
+Initialize Routing Tables
+          ↓
+Exchange Distance Vectors
+          ↓
+Calculate New Shortest Paths
+          ↓
+Update Routing Tables
+          ↓
+Exchange Updated Vectors
+          ↓
+      Convergence?
+       ↙       ↘
+     No         Yes
+     ↓           ↓
+  Repeat      Finish
